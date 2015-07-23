@@ -3,26 +3,27 @@
     <head>
         <link rel="stylesheet" type="text/css" href="./style.css">
         <meta name="viewport" content="width=device-width" />
+        <title>Angular-calendar</title>
     </head>
     <body ng-app="myApp">
         <div ng-controller="myCtrl" ng-init='getEventDatas()'>
-            <button class="button" ng-click="onClickToday()">Today</button>&nbsp&nbsp 	
+            <button class="button" ng-click="onClickToday()">Today</button>&nbsp&nbsp
             <button class="button" ng-click="previousDay()"><</button>
             <button class="button mrgleft-5" ng-click="nextDay()">></button>&nbsp&nbsp
             <span ng-bind="currentDate|date:'d MMM,yyyy'"></span>
 
             <div class="calendar-list-container">
                 <div class="event-time-container">
-                    <div ng-repeat="time in times track by $index" class="event-time" ng-bind="time">				
-                    </div>				
+                    <div ng-repeat="time in times track by $index" class="event-time" ng-bind="time">
+                    </div>
                 </div>
                 <div class="event-container">
                     <!-- margin-top: start time ; height: end time -->
-                    <div ng-repeat='currentEventData in currentEventDatas track by $index' class="event-details" ng-style="{'margin-top':currentEventData.marginTop+'px', 'height':currentEventData.height+'px','font-size':currentEventData.fontSize}">
+                    <div ng-repeat='currentEventData in currentEventDatas track by $index' class="event-details" ng-style="{'margin-top':currentEventData.marginTop + 'px', 'height':currentEventData.height + 'px','font-size':currentEventData.fontSize}">
                         <div class="event-text">
                             <span ng-bind="currentEventData.title"></span><br>
                             <span ng-bind="getEventTime(currentEventData.startTime) | date:'h:mma'"></span> - <span ng-bind="getEventTime(currentEventData.endTime) | date:'h:mma'"></span>
-                        </div> 
+                        </div>
                         <div class="event-controls">
                             <span>edit</span>
                             <span>delete</span>
@@ -30,12 +31,11 @@
                         </div>
                     </div>
                     <div ng-repeat="event in eventContainers track by $index" class="event">
-                    </div>					
-                </div>		
+                    </div>
+                </div>
             </div>
         </div>
         <script type="text/javascript" src="./bower_components/angular/angular.js"></script>
-        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.js"></script>
         <script type="text/javascript" src="./app.js"></script>
     </body>
 </html>
