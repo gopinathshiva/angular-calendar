@@ -1,0 +1,15 @@
+{
+  "name": "Angular-calendar",
+  "version": "0.1",
+  "authors": [
+    "gopi"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
