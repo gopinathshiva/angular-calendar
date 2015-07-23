@@ -1,50 +1,54 @@
 <!DOCTYPE html>
 <html>
-<head>
-	<link rel="stylesheet" type="text/css" href="./style.css">
-</head>
-<body ng-app="myApp">
-<div ng-controller="myCtrl">
- 	<button class="button" ng-click="onClickToday">Today</button>&nbsp&nbsp 	
-	<button class="button" ng-click="previousDay()"><</button>
-	<button class="button mrgleft-5" ng-click="nextDay()">></button>&nbsp&nbsp
-	<span>19 Feb,2015</span>
-	<!-- <div class="calendar-list-container">
-		<div class="parent-event-container">
-			<div class="event-time">8 AM</div>
-			<div class="event-container">
-				
-			</div>
-		</div>					
-		<div class="parent-event-container">
-			<div class="event-time">8 AM</div>
-			<div class="event-container">
-				
-			</div>
-		</div>					
-	</div> -->
+    <head>
+        <link rel="stylesheet" type="text/css" href="./style.css">
+    </head>
+    <body ng-app="myApp">
+        <div ng-controller="myCtrl">
+            <button class="button" ng-click="onClickToday">Today</button>&nbsp&nbsp 	
+            <button class="button" ng-click="previousDay()"><</button>
+            <button class="button mrgleft-5" ng-click="nextDay()">></button>&nbsp&nbsp
+            <span>19 Feb,2015</span>
+            <!-- <div class="calendar-list-container">
+                    <div class="parent-event-container">
+                            <div class="event-time">8 AM</div>
+                            <div class="event-container">
+                                    
+                            </div>
+                    </div>					
+                    <div class="parent-event-container">
+                            <div class="event-time">8 AM</div>
+                            <div class="event-container">
+                                    
+                            </div>
+                    </div>					
+            </div> -->
 
-	<div class="calendar-list-container">
-		<div class="event-time-container">
-			<div class="event-time">
-				8 AM
-			</div>	
-			<div class="event-time">
-				9 AM
-			</div>	
-		</div>
-		<div class="event-container">
-			<div class="event-details"></div>
-			<div class="event">
-				
-			</div>	
-			<div class="event">
-				
-			</div>	
-		</div>		
-	</div>
-</div>
-<script type="text/javascript" src="./bower_components/angular/angular.js"></script>
-<script type="text/javascript" src="./app.js"></script>
-</body>
+            <div class="calendar-list-container">
+                <div class="event-time-container">
+                    <div ng-repeat="time in times track by $index" class="event-time" ng-bind="time">				
+                    </div>				
+                </div>
+                <div class="event-container">
+                    <div class="event-details">
+                        <div class="event-text">
+                            <span ng-bind="test.title"></span><br>
+                            <span ng-bind="getEventTime(test.startTime) | date:'h:mma'"></span> - <span ng-bind="getEventTime(test.endTime) | date:'h:mma'"></span>
+                        </div> 
+                        <div class="event-controls">
+                            <span>edit</span>
+                            <span>delete</span>
+                            <span>cancel</span>
+                        </div>
+                    </div>
+                    <div ng-repeat="event in eventContainers track by $index" class="event">
+
+                    </div>					
+                </div>		
+            </div>
+        </div>
+        <script type="text/javascript" src="./bower_components/angular/angular.js"></script>
+        <script type="text/javascript" src="./bower_components/underscore.js"></script>
+        <script type="text/javascript" src="./app.js"></script>
+    </body>
 </html>

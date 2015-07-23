@@ -46,21 +46,42 @@
 	width: 95%;
 }
 
-.event-time,.event{	
+.event-time{	
 	height: 100px;
 }
 
+.event{
+        height:99px;
+}
+
 .event{  	 	
-  	border-top: 1px solid black;
+  	border-top: 1px solid gray;
 	background-color: rgb(226, 223, 223);
 }
   
 .event-details{
 	position: absolute;
 	background-color: gray;	
-	width: 99%;
+	width: 98%;
 	margin-left: 0.5%;
 	margin-right: 0.5%;
 	height: 25%;
-	margin-top: 15px;	
+	margin-top: 15px;
+        
+	padding: .4%;
+        color: white;
+}
+
+.event-text{
+    float:left;
+}
+
+.event-controls{
+    float: right;
+    margin-right: 10px;
+}
+
+.event-controls>span{
+    padding: 5px;
+    color:rgb(218, 215, 215);
 }
