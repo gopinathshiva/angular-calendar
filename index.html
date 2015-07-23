@@ -18,7 +18,7 @@
                 </div>
                 <div class="event-container">
                     <!-- margin-top: start time ; height: end time -->
-                    <div ng-mouseover="onMouseOver()" ng-mouseleave="onMouseLeave()" ng-repeat='currentEventData in currentEventDatas track by $index' class="event-details" ng-style="{'margin-top':currentEventData.marginTop+'px', 'height':currentEventData.height+'px'}">
+                    <div ng-repeat='currentEventData in currentEventDatas track by $index' class="event-details" ng-style="{'margin-top':currentEventData.marginTop+'px', 'height':currentEventData.height+'px','font-size':currentEventData.fontSize}">
                         <div class="event-text">
                             <span ng-bind="currentEventData.title"></span><br>
                             <span ng-bind="getEventTime(currentEventData.startTime) | date:'h:mma'"></span> - <span ng-bind="getEventTime(currentEventData.endTime) | date:'h:mma'"></span>
@@ -35,7 +35,7 @@
             </div>
         </div>
         <script type="text/javascript" src="./bower_components/angular/angular.js"></script>
-        <script type="text/javascript" src="./bower_components/underscore.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.js"></script>
         <script type="text/javascript" src="./app.js"></script>
     </body>
 </html>
