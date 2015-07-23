@@ -5,11 +5,33 @@ app.controller('myCtrl', function($scope,myService) {
     $scope.currentEventDatas = [];
     
     $scope.eventContainers = new Array(24);
-    $scope.times = myService.getTimes();
+    $scope.times = myService.getTimes();          
     
-    $scope.getStartTime = function(startDate){        
-        var date = new Date(startDate);
-        return date.getMilliseconds();
+    $scope.onClickToday = function(){         
+        if(+$scope.currentDate.setHours(0,0,0,0) === +new Date().setHours(0,0,0,0))
+            return;
+        
+        $scope.currentDate = new Date();
+        $scope.currentEventDatas = myService.getCurrentDayDatas($scope.currentDate,eventDatas);
+    };
+    
+    $scope.previousDay = function(){
+        $scope.currentDate.addDays(-1);
+        $scope.currentEventDatas = myService.getCurrentDayDatas($scope.currentDate,eventDatas);
+    };
+    
+    $scope.nextDay = function(){
+        $scope.currentDate.addDays(1);
+        $scope.currentEventDatas = myService.getCurrentDayDatas($scope.currentDate,eventDatas);
+    };
+    
+    $scope.onMouseOver = function(){
+        debugger
+        angular.element(this).addClass('highlight-event');
+    };
+    
+    $scope.onMouseLeave = function(){
+        angular.element(this).removeClass('highlight-event');
     };
     
     $scope.getEventTime = function(date){
@@ -17,16 +39,13 @@ app.controller('myCtrl', function($scope,myService) {
             return new Date(date);        
     };
     
-    $scope.getEndTime = function(endDate){
-        
-    };
-    
-    myService.get().then(function(data){
-        eventDatas = data.data;
-        $scope.currentEventDatas = myService.getCurrentDayDatas(new Date('Sun May 24 2015 01:00:00 GMT+0530 (IST)'),eventDatas);        
-        $scope.test = $scope.currentEventDatas[0];
-        debugger
-    });
+    $scope.getEventDatas = function(){
+        $scope.currentDate = new Date();   
+        myService.get().then(function(data){
+           eventDatas = data.data;
+           $scope.currentEventDatas = myService.getCurrentDayDatas(new Date(),eventDatas);                   
+        });   
+    };            
 });
 
 app.service('myService', function($http) {
@@ -50,17 +69,35 @@ app.service('myService', function($http) {
         times.push('12 PM');
         return times;
     };
-    api.getCurrentDayDatas = function(currentDate,allEventDatas){   
+    api.getCurrentDayDatas = function(currentDate,allEventDatas){  
        console.time('exec');
        currentDate.setHours(0,0,0,0);
        var currentDayDatas = _.filter(allEventDatas, function(data){
+           //debugger
            var date = new Date(data.startTime);
-           date.setHours(0,0,0,0);           
-           return +currentDate===+date; 
+           var temp = new Date(data.startTime);
+           temp.setHours(0,0,0,0);           
+           if(+currentDate===+temp){               
+               data.marginTop = date.getHours()*60;
+               data.marginTop+=date.getMinutes();
+               var endDate = new Date(data.endTime);
+               data.height = endDate.getHours()*60;
+               data.height+=endDate.getMinutes();
+               data.height -= data.marginTop;               
+               return data;
+           }
        });
        console.timeEnd('exec');
        return currentDayDatas;
     };
     return api;
 });
+
+Date.prototype.addDays = function (n) {
+    var time = this.getTime();
+    var changedDate = new Date(time + (n * 24 * 60 * 60 * 1000));
+    this.setTime(changedDate.getTime());
+    return this;
+};
+
 

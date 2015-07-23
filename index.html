@@ -2,27 +2,14 @@
 <html>
     <head>
         <link rel="stylesheet" type="text/css" href="./style.css">
+        <meta name="viewport" content="width=device-width" />
     </head>
     <body ng-app="myApp">
-        <div ng-controller="myCtrl">
-            <button class="button" ng-click="onClickToday">Today</button>&nbsp&nbsp 	
+        <div ng-controller="myCtrl" ng-init='getEventDatas()'>
+            <button class="button" ng-click="onClickToday()">Today</button>&nbsp&nbsp 	
             <button class="button" ng-click="previousDay()"><</button>
             <button class="button mrgleft-5" ng-click="nextDay()">></button>&nbsp&nbsp
-            <span>19 Feb,2015</span>
-            <!-- <div class="calendar-list-container">
-                    <div class="parent-event-container">
-                            <div class="event-time">8 AM</div>
-                            <div class="event-container">
-                                    
-                            </div>
-                    </div>					
-                    <div class="parent-event-container">
-                            <div class="event-time">8 AM</div>
-                            <div class="event-container">
-                                    
-                            </div>
-                    </div>					
-            </div> -->
+            <span ng-bind="currentDate|date:'d MMM,yyyy'"></span>
 
             <div class="calendar-list-container">
                 <div class="event-time-container">
@@ -30,10 +17,11 @@
                     </div>				
                 </div>
                 <div class="event-container">
-                    <div class="event-details">
+                    <!-- margin-top: start time ; height: end time -->
+                    <div ng-mouseover="onMouseOver()" ng-mouseleave="onMouseLeave()" ng-repeat='currentEventData in currentEventDatas track by $index' class="event-details" ng-style="{'margin-top':currentEventData.marginTop+'px', 'height':currentEventData.height+'px'}">
                         <div class="event-text">
-                            <span ng-bind="test.title"></span><br>
-                            <span ng-bind="getEventTime(test.startTime) | date:'h:mma'"></span> - <span ng-bind="getEventTime(test.endTime) | date:'h:mma'"></span>
+                            <span ng-bind="currentEventData.title"></span><br>
+                            <span ng-bind="getEventTime(currentEventData.startTime) | date:'h:mma'"></span> - <span ng-bind="getEventTime(currentEventData.endTime) | date:'h:mma'"></span>
                         </div> 
                         <div class="event-controls">
                             <span>edit</span>
@@ -42,7 +30,6 @@
                         </div>
                     </div>
                     <div ng-repeat="event in eventContainers track by $index" class="event">
-
                     </div>					
                 </div>		
             </div>
