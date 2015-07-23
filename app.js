@@ -16,6 +16,7 @@ app.controller('myCtrl', function ($scope, myService) {
     $scope.eventContainers = new Array(24);
     $scope.times = myService.getTimes();
 
+    /* function to run on click of today button  */
     $scope.onClickToday = function () {
         if (+$scope.currentDate.setHours(0, 0, 0, 0) === +new Date().setHours(0, 0, 0, 0))
             return;
@@ -24,21 +25,25 @@ app.controller('myCtrl', function ($scope, myService) {
         $scope.currentEventDatas = myService.getCurrentDayDatas($scope.currentDate, eventDatas);
     };
 
+    /* function to run on click of '<' button  */
     $scope.previousDay = function () {
         $scope.currentDate.addDays(-1);
         $scope.currentEventDatas = myService.getCurrentDayDatas($scope.currentDate, eventDatas);
     };
 
+    /* function to run on click of '>' button  */
     $scope.nextDay = function () {
         $scope.currentDate.addDays(1);
         $scope.currentEventDatas = myService.getCurrentDayDatas($scope.currentDate, eventDatas);
     };
 
+    /* function to update time for events in UI  */
     $scope.getEventTime = function (date) {
         if (date)
             return new Date(date);
     };
 
+    /* function to call on ng-init */
     $scope.getEventDatas = function () {
         $scope.currentDate = new Date();
         myService.get().then(function (data) {
@@ -50,9 +55,11 @@ app.controller('myCtrl', function ($scope, myService) {
 
 app.service('myService', function ($http) {
     var api = {};
+    /* function get the sample-data json file using $http */
     api.get = function () {
         return $http.get('sample-data.json');
     };
+    /* function to output hours in UI  */
     api.getTimes = function () {
         var times = [];
         for (var i = 1; i <= 23; i++) {
@@ -69,6 +76,7 @@ app.service('myService', function ($http) {
         times.push('12 PM');
         return times;
     };
+    /* function to filter the current date events */
     api.getCurrentDayDatas = function (currentDate, allEventDatas) {
         console.time('exec');
         currentDate.setHours(0, 0, 0, 0);
@@ -100,6 +108,7 @@ app.service('myService', function ($http) {
     return api;
 });
 
+/* extending Date object to get previous and next days */
 Date.prototype.addDays = function (n) {
     var time = this.getTime();
     var changedDate = new Date(time + (n * 24 * 60 * 60 * 1000));
